@@ -27,48 +27,24 @@ func fetchRepositories() async throws -> [Repository] {
   return try await JSONDecoder().decode(Repositories.self, from: data).repos
 }
 
-/** basic try-catch
-do {
-  let res = try somemethod()
-} catch {
-
-}
- */
-
-/**
- define error
- enum EncryptionError: Error {
-   case empty
-   case short
- }
- // in somemethod
- guard password.count >= 5 else {
-   throw EncryptionError.short
- }
-// in main method
- catch EncryptionError.empty {
-   print("....")
- }
- */
-
 // A task to utilize this function
 // - call function then loop over repos array to print out the name & url for each
 // - interject lots of print statements with 'Step X' to see how things are progressing
 Task {
-  print("Step 1")
-  print("Start task")
+  print("Step 1 Task Start")
   // fetch data
   do {
+    print("Step 2 Fetch Data")
     let data = try await fetchRepositories();
     // print data
-    print("Step 2")
-    print(data)
-    // finish the task
-    print("End task")
-    print("Step 5")
+    print("Step 3 Print Data")
+    for repo in data {
+      print("\(repo.name): \(repo.htmlURL)")
+    }
+    
   } catch {
     print("Error")
   }
-  
+  print("Step 4 End task")
 }
-print("Step 6")
+print("Step 5 Outside")
